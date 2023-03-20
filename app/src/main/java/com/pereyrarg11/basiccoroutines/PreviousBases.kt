@@ -1,14 +1,37 @@
 package com.pereyrarg11.basiccoroutines
 
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlin.concurrent.thread
 import kotlin.random.Random.Default.nextLong
 
+private const val SEPARATOR = "=========="
+
 fun main() {
-    lambda()
-    threads()
+    //lambda()
+    //threads()
+    coroutinesVsThreads()
+}
+
+fun coroutinesVsThreads() {
+    newTopic("Coroutines vs Threads")
+    runBlocking {
+        (1..1_000_000).forEach {
+            launch {
+                delay(randomSleep())
+                print("*")
+            }
+        }
+    }
+}
+
+fun newTopic(topic: String) {
+    println("$SEPARATOR $topic $SEPARATOR")
 }
 
 fun threads() {
+    newTopic("Threads")
     println("timesAsThread: ${timesAsThread(5, 8)}")
     timesWithThreadAndLambda(5, 8) {
         println("timesWithThreadAndLambda: $it")
@@ -40,6 +63,7 @@ fun timesWithThreadAndLambda(a: Int, b: Int, callback: (result: Int) -> Unit) {
 fun randomSleep(): Long = nextLong(500, 2_000)
 
 fun lambda() {
+    newTopic("Lambda")
     println(times(5, 8))
     timesAsLambda(5, 8) { result ->
         println(result)
