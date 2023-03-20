@@ -9,7 +9,10 @@ fun main() {
 }
 
 fun threads() {
-    println(timesAsThread(5, 8))
+    println("timesAsThread: ${timesAsThread(5, 8)}")
+    timesWithThreadAndLambda(5, 8) {
+        println("timesWithThreadAndLambda: $it")
+    }
 }
 
 fun timesAsThread(a: Int, b: Int): Int {
@@ -22,6 +25,16 @@ fun timesAsThread(a: Int, b: Int): Int {
 
     Thread.sleep(2_100)
     return result
+}
+
+fun timesWithThreadAndLambda(a: Int, b: Int, callback: (result: Int) -> Unit) {
+    var result = 0
+
+    thread {
+        Thread.sleep(randomSleep())
+        result = a * b
+        callback(result)
+    }
 }
 
 fun randomSleep(): Long = nextLong(500, 2_000)
