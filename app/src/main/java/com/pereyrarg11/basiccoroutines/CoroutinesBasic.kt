@@ -3,11 +3,37 @@ package com.pereyrarg11.basiccoroutines
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 fun main() {
     //globalScope()
-    suspendFun()
+    //suspendFun()
+    newTopic("Coroutine constructors")
+    //cRunBlocking()
+    cLaunch()
     readLine()
+}
+
+fun cLaunch() {
+    runBlocking {
+    newTopic("launch")
+        launch {
+            startMessage()
+            delay(randomSleep())
+            println("launch...")
+            endMessage()
+        }
+    }
+}
+
+fun cRunBlocking() {
+    newTopic("Run blocking")
+    runBlocking {
+        startMessage()
+        delay(randomSleep())
+        println("run blocking...")
+        endMessage()
+    }
 }
 
 fun suspendFun() {
