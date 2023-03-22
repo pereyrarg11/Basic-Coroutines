@@ -5,8 +5,19 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 fun main() {
-    globalScope()
+    //globalScope()
+    suspendFun()
     readLine()
+}
+
+fun suspendFun() {
+    newTopic("Suspend fun")
+    Thread.sleep(randomSleep())
+    GlobalScope.launch {
+        startMessage()
+        delay(randomSleep())
+        endMessage()
+    }
 }
 
 fun globalScope() {
