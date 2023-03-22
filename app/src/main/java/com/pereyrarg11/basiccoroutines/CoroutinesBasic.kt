@@ -1,6 +1,9 @@
 package com.pereyrarg11.basiccoroutines
 
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.channels.produce
 
 fun main() {
     //globalScope()
@@ -10,8 +13,19 @@ fun main() {
     //cLaunch()
     //cAsync()
     //job()
-    deferred()
+    //deferred()
+    cProduce()
     readLine()
+}
+
+fun cProduce() = runBlocking {
+    newTopic("Produce")
+    val names = producesNames()
+    names.consumeEach { println(it) }
+}
+
+fun CoroutineScope.producesNames(): ReceiveChannel<String> = produce {
+    (1..5).forEach { send("name$it") }
 }
 
 fun deferred() {
