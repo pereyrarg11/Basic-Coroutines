@@ -4,9 +4,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlin.concurrent.thread
-import kotlin.random.Random.Default.nextLong
-
-private const val SEPARATOR = "=========="
 
 fun main() {
     //lambda()
@@ -24,10 +21,6 @@ fun coroutinesVsThreads() {
             }
         }
     }
-}
-
-fun newTopic(topic: String) {
-    println("$SEPARATOR $topic $SEPARATOR")
 }
 
 fun threads() {
@@ -59,8 +52,6 @@ fun timesWithThreadAndLambda(a: Int, b: Int, callback: (result: Int) -> Unit) {
         callback(result)
     }
 }
-
-fun randomSleep(): Long = nextLong(500, 2_000)
 
 fun lambda() {
     newTopic("Lambda")
