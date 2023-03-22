@@ -8,8 +8,33 @@ fun main() {
     newTopic("Coroutine constructors")
     //cRunBlocking()
     //cLaunch()
-    cAsync()
+    //cAsync()
+    job()
     readLine()
+}
+
+fun job() {
+    runBlocking {
+        newTopic("Job")
+        val job = launch {
+            startMessage()
+            delay(2_100)
+            println("job...")
+            endMessage()
+        }
+        println("Job: $job")
+        println("isActive: ${job.isActive}")
+        println("isCancelled: ${job.isCancelled}")
+        println("isCompleted: ${job.isCompleted}")
+
+        delay(randomSleep())
+        println("Job cancelled")
+        job.cancel()
+
+        println("isActive: ${job.isActive}")
+        println("isCancelled: ${job.isCancelled}")
+        println("isCompleted: ${job.isCompleted}")
+    }
 }
 
 fun cAsync() {
