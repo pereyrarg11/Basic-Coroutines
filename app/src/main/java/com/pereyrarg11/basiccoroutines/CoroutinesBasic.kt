@@ -1,17 +1,29 @@
 package com.pereyrarg11.basiccoroutines
 
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 fun main() {
     //globalScope()
     //suspendFun()
     newTopic("Coroutine constructors")
     //cRunBlocking()
-    cLaunch()
+    //cLaunch()
+    cAsync()
     readLine()
+}
+
+fun cAsync() {
+    newTopic("async")
+    runBlocking {
+        val result = async {
+            startMessage()
+            delay(randomSleep())
+            println("async...")
+            endMessage()
+            8
+        }
+        println("Result: ${result.await()}")
+    }
 }
 
 fun cLaunch() {
