@@ -1,11 +1,28 @@
 package com.pereyrarg11.basiccoroutines
 
 import kotlinx.coroutines.*
+import kotlin.random.Random
 
 fun main() {
     //dispatchers()
     //nested()
-    changeWithContext()
+    //changeWithContext()
+    sequences()
+}
+
+fun sequences() {
+    newTopic("Sequences")
+    getDataBySeq().forEach { println("$it degrees") }
+}
+
+fun getDataBySeq(): Sequence<Float> {
+    return sequence {
+        (1..5).forEach {
+            println("processing data...")
+            Thread.sleep(randomSleep())
+            yield(20 + it + Random.nextFloat())
+        }
+    }
 }
 
 fun changeWithContext() {
