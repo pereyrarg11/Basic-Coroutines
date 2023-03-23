@@ -4,7 +4,30 @@ import kotlinx.coroutines.*
 
 fun main() {
     //dispatchers()
-    nested()
+    //nested()
+    changeWithContext()
+}
+
+fun changeWithContext() {
+    runBlocking {
+        newTopic("withContext")
+        startMessage()
+
+        withContext(newSingleThreadContext("pereyrarg11")) {
+            startMessage()
+            delay(randomSleep())
+            println("coroutine with context")
+            endMessage()
+        }
+
+        withContext(Dispatchers.IO) {
+            startMessage()
+            delay(randomSleep())
+            println("request data from remote")
+            endMessage()
+        }
+        endMessage()
+    }
 }
 
 fun nested() {
