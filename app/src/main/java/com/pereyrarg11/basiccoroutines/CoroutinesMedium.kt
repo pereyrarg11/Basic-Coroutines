@@ -1,12 +1,54 @@
 package com.pereyrarg11.basiccoroutines
 
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.newSingleThreadContext
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 fun main() {
-    dispatchers()
+    //dispatchers()
+    nested()
+}
+
+fun nested() {
+    runBlocking {
+        newTopic("Nested")
+        val job = launch {
+            startMessage()
+            launch {
+                startMessage()
+                delay(randomSleep())
+                println("nested coroutine")
+                endMessage()
+            }
+
+            val nestedJob = launch(Dispatchers.IO) {
+                startMessage()
+
+                launch(newSingleThreadContext("pereyrarg11")) {
+                    startMessage()
+                    println("pereyrarg11 coroutine")
+                    endMessage()
+                }
+
+                delay(randomSleep())
+                println("IO")
+                endMessage()
+            }
+            delay(randomSleep()/4)
+            nestedJob.cancel()
+            println("nested job was cancelled")
+
+            var sum = 0
+            (1..100).forEach {
+                sum += it
+                delay(randomSleep()/100)
+            }
+            println("Sum=$sum")
+            endMessage()
+        }
+
+        delay(randomSleep()/2)
+        job.cancel()
+        println("Job was cancelled")
+    }
 }
 
 fun dispatchers() {
