@@ -1,13 +1,44 @@
 package com.pereyrarg11.basiccoroutines
 
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlin.random.Random
 
 fun main() {
     //dispatchers()
     //nested()
     //changeWithContext()
-    sequences()
+    //sequences()
+    basicFlows()
+}
+
+fun basicFlows() {
+    newTopic("Basic flows")
+    runBlocking {
+        launch {
+            getDataByFlow().collect {
+                println(it)
+            }
+        }
+
+        launch {
+            (1..50).forEach {
+                delay(randomSleep()/10)
+                println("Task 2, step $it")
+            }
+        }
+    }
+}
+
+fun getDataByFlow(): Flow<Float> {
+    return flow {
+        (1..5).forEach {
+            println("processing data...")
+            delay(randomSleep())
+            emit(20 + it + Random.nextFloat())
+        }
+    }
 }
 
 fun sequences() {
