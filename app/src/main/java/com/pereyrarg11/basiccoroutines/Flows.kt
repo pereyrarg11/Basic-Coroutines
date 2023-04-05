@@ -3,6 +3,7 @@ package com.pereyrarg11.basiccoroutines
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -30,6 +31,13 @@ fun flowOperators() {
             }
             .map {
                 setFormat(it)
+            }
+
+        newTopic("transform { }")
+        getDataByFlow()
+            .transform {
+                emit(setFormat(it))
+                emit(setFormat(convertCelsiusToFahrenheit(it), "F"))
             }
             .collect {
                 println(it)
