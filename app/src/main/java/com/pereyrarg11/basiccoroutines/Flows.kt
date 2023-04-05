@@ -1,10 +1,7 @@
 package com.pereyrarg11.basiccoroutines
 
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -12,7 +9,34 @@ import java.util.*
 fun main() {
     //coldFlow()
     //cancelFlow()
-    flowOperators()
+    //flowOperators()
+    terminalFlowOperators()
+}
+
+fun terminalFlowOperators() {
+    runBlocking {
+        newTopic("Terminal operators")
+        toListOperator()
+        singleOperator()
+    }
+}
+
+suspend fun singleOperator() {
+    newTopic("single()")
+
+    val single = getDataByFlow()
+        .take(1)
+        .single()
+
+    println("single: $single")
+}
+
+suspend fun toListOperator() {
+    newTopic("toList()")
+
+    val list = getDataByFlow().toList()
+
+    println("list: $list")
 }
 
 fun flowOperators() {
