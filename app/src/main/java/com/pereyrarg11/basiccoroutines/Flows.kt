@@ -1,13 +1,37 @@
 package com.pereyrarg11.basiccoroutines
 
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.util.*
 
 fun main() {
     //coldFlow()
-    cancelFlow()
+    //cancelFlow()
+    flowOperators()
 }
+
+fun flowOperators() {
+    runBlocking {
+        newTopic("Operators")
+        newTopic("map()")
+        getDataByFlow()
+            .map {
+                setFormat(it)
+                setFormat(convertCelsiusToFahrenheit(it), "F")
+            }
+            .collect {
+                println(it)
+            }
+    }
+}
+
+fun convertCelsiusToFahrenheit(celsius: Float): Float =
+    (celsius * 9 / 5) + 32
+
+fun setFormat(temp: Float, degree: String = "C"): String =
+    String.format(Locale.getDefault(), "%.1f'$degree", temp)
 
 fun cancelFlow() {
     runBlocking {
