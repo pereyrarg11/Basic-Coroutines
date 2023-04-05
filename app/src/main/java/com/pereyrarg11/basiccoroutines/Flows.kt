@@ -3,6 +3,7 @@ package com.pereyrarg11.basiccoroutines
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -17,6 +18,17 @@ fun main() {
 fun flowOperators() {
     runBlocking {
         newTopic("Operators")
+
+        newTopic("take { }")
+        getDataByFlow()
+            .take(3)
+            .map {
+                setFormat(it)
+            }
+            .collect {
+                println(it)
+            }
+
         newTopic("map()")
         getDataByFlow()
             .map {
