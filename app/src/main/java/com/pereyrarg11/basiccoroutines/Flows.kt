@@ -1,6 +1,7 @@
 package com.pereyrarg11.basiccoroutines
 
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -20,6 +21,15 @@ fun flowOperators() {
             .map {
                 setFormat(it)
                 setFormat(convertCelsiusToFahrenheit(it), "F")
+            }
+
+        newTopic("filter { }")
+        getDataByFlow()
+            .filter {
+                it < 23
+            }
+            .map {
+                setFormat(it)
             }
             .collect {
                 println(it)
