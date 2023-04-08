@@ -16,9 +16,22 @@ fun main() {
 fun terminalFlowOperators() {
     runBlocking {
         newTopic("Terminal operators")
-        toListOperator()
-        singleOperator()
+        //toListOperator()
+        //singleOperator()
+        firstOperator()
+        lastOperator()
     }
+}
+suspend fun firstOperator() {
+    newTopic("first()")
+    val first = getDataByFlow().first()
+    println("first: $first")
+}
+
+suspend fun lastOperator() {
+    newTopic("last()")
+    val last = getDataByFlow().last()
+    println("last: $last")
 }
 
 suspend fun singleOperator() {
