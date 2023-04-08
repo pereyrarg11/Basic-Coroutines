@@ -28,8 +28,22 @@ fun terminalFlowOperators() {
         //flowConflation()
         //zipOperator()
         //combineOperator()
-        flatMapConcatOperator()
+        //flatMapConcatOperator()
+        flatMapMergeOperator()
     }
+}
+
+suspend fun flatMapMergeOperator() {
+    newTopic("flatMapMerge")
+    getCitiesAsFlow()
+        .flatMapMerge { city ->
+            println("last 3 days in $city")
+            getDataToFlatFlow(city)
+        }
+        .map { setFormat(it) }
+        .collect {
+            println(it)
+        }
 }
 
 suspend fun flatMapConcatOperator() {
