@@ -6,7 +6,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
 import kotlin.system.measureTimeMillis
-import kotlin.time.measureTime
 
 fun main() {
     //coldFlow()
@@ -25,8 +24,22 @@ fun terminalFlowOperators() {
         //reduceOperator()
         //foldOperator()
         //flowBuffer()
-        flowConflation()
+        //flowConflation()
+        zipOperator()
     }
+}
+
+suspend fun zipOperator() {
+    newTopic("zip")
+    getDataByFlowWithStaticDelay()
+        .map { setFormat(it) }
+        .zip(getMatchResultFlow()) { degrees, matchResult ->
+            "$matchResult, $degrees"
+        }
+        .collect {
+            delay(100)
+            println(it)
+        }
 }
 
 suspend fun flowConflation() {
