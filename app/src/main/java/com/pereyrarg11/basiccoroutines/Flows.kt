@@ -24,8 +24,22 @@ fun terminalFlowOperators() {
         //lastOperator()
         //reduceOperator()
         //foldOperator()
-        flowBuffer()
+        //flowBuffer()
+        flowConflation()
     }
+}
+
+suspend fun flowConflation() {
+    newTopic("conflate")
+    val time = measureTimeMillis {
+        getMatchResultFlow()
+            .conflate()
+            .collect {
+                delay(100)
+                println(it)
+            }
+    }
+    println("time: $time ms")
 }
 
 suspend fun flowBuffer() {

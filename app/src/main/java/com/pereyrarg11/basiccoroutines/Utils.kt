@@ -40,3 +40,17 @@ fun getDataByFlowWithStaticDelay(): Flow<Float> {
         }
     }
 }
+
+fun getMatchResultFlow(): Flow<String> {
+    return flow {
+        var homeScore = 0
+        var awayScore = 0
+        (0..45).forEach {
+            println("minuto $it")
+            delay(50)
+            homeScore += Random.nextInt(0, 21) / 20
+            awayScore += Random.nextInt(0, 21) / 20
+            emit("$homeScore - $awayScore")
+        }
+    }
+}
