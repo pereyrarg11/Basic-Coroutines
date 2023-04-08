@@ -5,6 +5,8 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
+import kotlin.system.measureTimeMillis
+import kotlin.time.measureTime
 
 fun main() {
     //coldFlow()
@@ -21,8 +23,23 @@ fun terminalFlowOperators() {
         //firstOperator()
         //lastOperator()
         //reduceOperator()
-        foldOperator()
+        //foldOperator()
+        flowBuffer()
     }
+}
+
+suspend fun flowBuffer() {
+    newTopic("buffer")
+    val time = measureTimeMillis {
+        getDataByFlowWithStaticDelay()
+            .map { setFormat(it) }
+            .buffer()
+            .collect {
+                delay(500)
+                println(it)
+            }
+    }
+    println("time: $time ms")
 }
 
 suspend fun foldOperator() {
