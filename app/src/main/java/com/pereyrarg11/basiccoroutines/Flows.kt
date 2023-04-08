@@ -18,10 +18,22 @@ fun terminalFlowOperators() {
         newTopic("Terminal operators")
         //toListOperator()
         //singleOperator()
-        firstOperator()
-        lastOperator()
+        //firstOperator()
+        //lastOperator()
+        reduceOperator()
     }
 }
+
+suspend fun reduceOperator() {
+    newTopic("reduce {}")
+    val saving = getDataByFlow()
+        .reduce { accumulator, value ->
+            println("accumulator: $accumulator, value: $value")
+            accumulator + value
+        }
+    println("saving: $saving")
+}
+
 suspend fun firstOperator() {
     newTopic("first()")
     val first = getDataByFlow().first()
