@@ -54,3 +54,12 @@ fun getMatchResultFlow(): Flow<String> {
         }
     }
 }
+
+fun getCitiesAsFlow(): Flow<String> = flow {
+    listOf<String>("CDMX", "Monterrey", "Guadalajara")
+        .forEach { city ->
+            println("getting data from $city...")
+            delay(1_000)
+            emit(city)
+        }
+}

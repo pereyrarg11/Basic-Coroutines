@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.*
+import kotlin.random.Random
 import kotlin.system.measureTimeMillis
 
 fun main() {
@@ -26,7 +27,32 @@ fun terminalFlowOperators() {
         //flowBuffer()
         //flowConflation()
         //zipOperator()
-        combineOperator()
+        //combineOperator()
+        flatMapConcatOperator()
+    }
+}
+
+suspend fun flatMapConcatOperator() {
+    newTopic("flatMapConcat")
+    getCitiesAsFlow()
+        .flatMapConcat { city ->
+            println("last 3 days in $city")
+            getDataToFlatFlow(city)
+        }
+        .map { setFormat(it) }
+        .collect {
+            println(it)
+        }
+}
+
+fun getDataToFlatFlow(city: String): Flow<Float> = flow {
+    (1..2).forEach {
+        println("Morning")
+        emit(Random.nextInt(10, 30).toFloat())
+
+        delay(100)
+        println("Afternoon")
+        emit(20 + it + kotlin.random.Random.nextFloat())
     }
 }
 
