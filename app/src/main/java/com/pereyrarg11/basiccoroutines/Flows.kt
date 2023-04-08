@@ -20,8 +20,19 @@ fun terminalFlowOperators() {
         //singleOperator()
         //firstOperator()
         //lastOperator()
-        reduceOperator()
+        //reduceOperator()
+        foldOperator()
     }
+}
+
+suspend fun foldOperator() {
+    newTopic("fold {}")
+    val initialValue = 20f
+    val saving = getDataByFlow()
+        .fold(initialValue) { acc, value ->
+            acc + value
+        }
+    println("saving: $saving")
 }
 
 suspend fun reduceOperator() {
