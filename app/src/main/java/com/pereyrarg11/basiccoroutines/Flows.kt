@@ -25,8 +25,22 @@ fun terminalFlowOperators() {
         //foldOperator()
         //flowBuffer()
         //flowConflation()
-        zipOperator()
+        //zipOperator()
+        combineOperator()
     }
+}
+
+suspend fun combineOperator() {
+    newTopic("combine")
+    getDataByFlowWithStaticDelay()
+        .map { setFormat(it) }
+        .combine(getMatchResultFlow()) { degrees, matchResult ->
+            "$matchResult, $degrees"
+        }
+        .collect {
+            delay(100)
+            println(it)
+        }
 }
 
 suspend fun zipOperator() {
